@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Jumbotron, Grid, Row, Col, Image, Button } from 'react-bootstrap';
 import './SplashScreen.css';
-import SplashNav from './SplashNav.js';
 
 export default class SplashScreen extends Component {
   render() {
     return (
       <div>
-        <SplashNav />
         <Grid>
           <Row className="show-grid text-center">
             <Col md={4} mdOffset={1}>

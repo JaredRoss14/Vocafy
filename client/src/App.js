@@ -6,11 +6,13 @@ import SignUp from "./pages/SignUp";
 import NoMatch from "./pages/NoMatch";
 import SplashScreen from "./pages/SplashScreen";
 import Footer from "./components/Footer";
+import Navheader from "./components/Navheader";
 
 
 const App = () => (
   <Router>
     <div>
+      <Navheader />
       <Switch>
         <Route exact path="/" component={SplashScreen} />
         <Route exact path="/home" component={Home} />

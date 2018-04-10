@@ -18,9 +18,11 @@
     "nodemon": "^1.11.0"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "axios": "^0.18.0",
+    "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.17.2",
     "connect-flash": "^0.1.1",
+    "connect-mongo": "^2.0.1",
     "cookie-parser": "^1.4.3",
     "dotenv": "^5.0.1",
     "express": "^4.15.4",

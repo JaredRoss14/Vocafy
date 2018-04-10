@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Navbar, Nav, NavItem, MenuItem, NavDropdown, FormGroup, FormControl, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-class SplashNav extends Component {
+class Navheader extends Component {
   render() {
     return (
       <Navbar fluid={true} inverse default collapseOnSelect>
@@ -15,7 +15,7 @@ class SplashNav extends Component {
         <Navbar.Form pullLeft>
           <FormGroup>
             <FormControl type="text" placeholder="What Are You Passionate About?" />
-          </FormGroup>{' '}
+          </FormGroup>
           <Button type="submit">Search</Button>
         </Navbar.Form>
 
@@ -34,4 +34,4 @@ class SplashNav extends Component {
   }
 }
 
-export default SplashNav;
+export default Navheader;
