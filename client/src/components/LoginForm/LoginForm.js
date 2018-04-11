@@ -1,71 +1,63 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Grid, Col, Form, FormControl, FormGroup, ControlLabel, HelpBlock, Button } from 'react-bootstrap';
 import axios from 'axios';
-import './SignUpForm.css';
-import API from '../../utils/API';
+import './LoginForm.css';
 
 
-class SignUpForm extends Component {
-  constructor(props) {
-    super(props);
+class LoginForm extends Component {
+  constructor(props, context) {
+    super(props, context);
 
     this.state = {
       username: "",
       password: "",
-      confirmPassword: "",
-      email: "",
-      passwordInvalid: false,
-      emailInvalid: false,
-      signupSubmitted: false
+      loginInvalid: false
+      userAttempts: 0
     }
 
     this.handleFormInput = this.handleFormInput.bind(this);
   }
 
-  handleFormInput(event) {
-    const { name, value } = event.target;
-    this.setState({ [name]: value }, () => this.validateInput(name, value));
-  }
+  // handleFormInput(event) {
+  //   const { name, value } = event.target;
+  //   this.setState({ [name]: value }, () => this.validateInput(name, value));
+  // }
 
-  validateInput(inputName, value) {
-    let passwordInvalid = this.state.passwordInvalid;
-    let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  // validateInput(fieldName, value) {
+  //   let passwordInvalid = this.state.passwordInvalid;
+  //   let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    switch (inputName) {
-      case 'password':
-      case 'confirmPassword':
-        if (value === this.state.password && value === this.state.confirmPassword) {
-          this.setState({ passwordInvalid: false });
-        } else {
-          this.setState({ passwordInvalid: true });
-        }
-      break;
-      case 'email':
-        if (emailRegex.test(value)) {
-          this.setState({ emailInvalid: false });
-        } else {
-          this.setState({ emailInvalid: true });
-        }
-        break;
-        default:
-        break;
-    }
-  }
+  //   switch (fieldName) {
+  //     case 'password':
+  //     case 'confirmPassword':
+  //       if (value === this.state.password && value === this.state.confirmPassword) {
+  //         this.setState({ passwordInvalid: false });
+  //       } else {
+  //         this.setState({ passwordInvalid: true });
+  //       }
+  //       break;
+  //     case 'email':
+  //       if (emailRegex.test(value)) {
+  //         this.setState({ emailInvalid: false });
+  //       } else {
+  //         this.setState({ emailInvalid: true });
+  //       }
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 
   onFormSubmit = (event) => {
     event.preventDefault();
     if (!this.state.emailInvalid && !this.state.passwordInvalid) {
-      axios.post("/user/signup", {
+      axios.post('/users/login', {
         username: this.state.username,
         password: this.state.password,
-        email: this.state.email
       }).then((res) => this.setState({
         username: "",
-        email: "",
         password: "",
-        confirmPassword: "",
-        signupSubmitted: true
-      }))
+      }));
     }
   }
 
@@ -87,12 +79,12 @@ class SignUpForm extends Component {
                 placeholder="Username"
                 value={this.state.username}
                 onChange={this.handleFormInput}
-                />
+              />
             </FormGroup>
             <FormGroup>
               <ControlLabel htmlFor="email">Email</ControlLabel>
               <FormControl
-                className={this.state.emailInvalid ? 'warning' : ''}  
+                className={this.state.emailInvalid ? 'warning' : ''}
                 type="email"
                 name="email"
                 placeholder="Email"
@@ -125,11 +117,11 @@ class SignUpForm extends Component {
             <Button type="submit" onClick={this.onFormSubmit}>
               Sign Up
             </Button>
-          </Form>  
-        </Col>  
+          </Form>
+        </Col>
       </Grid>
     )
   }
 }
 
-export default SignUpForm;
+export default LoginForm;

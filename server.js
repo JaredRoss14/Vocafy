@@ -14,6 +14,10 @@ const app = express();
 const expressValidator = require("express-validator");
 const PORT = process.env.PORT || 3001;
 const MongoStore = require('connect-mongo')(session);
+const morgan = require('morgan');
+
+// Set up morgan
+app.use(morgan('dev'));
 
 // Set Up Passport
 const passport = require("passport");
@@ -26,6 +30,20 @@ app.use(cookieParser());
 // Configure Body Parser for AJAX requests
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.set('trust proxy', 1)
+// Set Express Session
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  saveUninitialized: true,
+  resave: true,
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection
+  })
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Express Validator
 app.use(expressValidator({
@@ -45,18 +63,19 @@ app.use(expressValidator({
   }
 }));
 
-// Set Express Session
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  saveUninitialized: true,
-  resave: true,
-  store: new MongoStore({
-    mongooseConnection: mongoose.connection
-  })
-}));
+// Connect Flash
+app.use(flash());
+// Flash Global Vars
+app.use(function (req, res, next) {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
 
 // Configure Routes
 app.use(routes);
+require('./routes/authentication')(app, passport);
 
 // Set up promises with mongoose
 mongoose.Promise = global.Promise;
