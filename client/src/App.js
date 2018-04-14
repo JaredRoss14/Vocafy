@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import NoMatch from "./pages/NoMatch";
 import SplashScreen from "./pages/SplashScreen";
-import Campaign from "./pages/campaign";
+import Campaign from "./pages/Campaign";
 import Footer from "./components/Footer";
 import Navheader from "./components/Navheader";
 import Wrapper from "./components/Wrapper";
@@ -52,9 +52,9 @@ return (
             <Route exact path="/" component={SplashScreen} />
             <Route exact path="/home" component={Home} />
           <Route exact path="/login" render={() => <Login userLoggedIn={this.userLoggedIn} />} />
-            <Route exact path="/signup" component={SignUp}/>
-          <Route component={NoMatch} />
+          <Route exact path="/signup" component={SignUp} />
           <Route exact path="/campaign" component={Campaign} />
+          <Route component={NoMatch} />
           </Switch>
         </Wrapper>
       <Footer />
