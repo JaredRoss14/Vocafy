@@ -3,21 +3,24 @@ const LocalStrategy = require('passport-local').Strategy;
 const randomstring = require('randomstring');
 const mailer = require('../controllers/mailController');
 const User = require('../models/users');
+const bcrypt = require('bcrypt-nodejs');
 
 // Expose this function to our app using module.exports
 module.exports = function (passport) {
 
   // Set up passport sessions
-  
+
   // Serialize User
   passport.serializeUser(function (user, done) {
-    done(null, user.id);
+    console.log('=========');
+    console.log(user);
+    done(null, user);
   });
 
   // Deserialize User
   passport.deserializeUser(function (id, done) {
-    User.findById(id).then((user) => {
-      done(null, user);
+    User.findById(id, function (err, user) {
+      done(err, user)
     });
   });
 
@@ -26,35 +29,44 @@ module.exports = function (passport) {
   passport.use('local-signup', new LocalStrategy({
     usernameField: 'username',
     passwordField: 'password',
-    passReqtoCallback: true
-  },
-    function (req, username, password, done) {
+    passReqToCallback: true
+  }, function (req, username, password, done) {
+    
 
       // See if the user trying to login already exists
       User.findOne({ 'local.username': username }, function (err, user) {
           
         // If there are any errors, return error
-        if (err)
+        if (err) {
+          console.log("Database Error: Looking for user");
           return done(err);
+        }
           
         // Check to see if a user with that email already exists
         if (user) {
+          console.log("Account Error: Username taken");
           return done(null, false, req.flash('signupMessage', 'That username is already in use.'));
+
         } else {
           // If no user exists, create new user 
           let newUser = new User();
 
           // Set new user credentials
           newUser.local.username = username;
-          newUser.local.email = email;
-          newUser.local.password = newUser.generateHash(password);
-          newUser.verificationToken = randomstring.generate(16);
+          newUser.local.email = req.body.email;
+          newUser.local.password = bcrypt.hashSync(password, null, null);
+          newUser.local.verificationToken = randomstring.generate(16);
 
           // Save the user
           newUser.save(function (err) {
-            if (err)
+            if (err) {
+              console.log("")
               throw err;
-            return done(null, newUser);
+            } else {
+              mailer.sendVerificationEmail(newUser.local.email, newUser.local.username, newUser.local.verificationToken);
+              return done(null, newUser);
+            }
+
           });
         }
       });
@@ -72,18 +84,26 @@ module.exports = function (passport) {
       User.findOne({ 'local.username': username }, function (err, user) {
 
         // If errors, return errors
-        if (err)
+        if (err) {
+          console.log("Error in passport")
           return done(err);
+        }
 
         // Is no user is found, return message
-        if (!user)
-          return done(null, false, req.flash('loginMessage', 'That username does not exist'));
+        if (!user) {
+          console.log("Error in passport no user found")
+          return done('Username was not found', false, null);
+        }
 
         // If user is found but password is wrong
-        if (!user.validPassword(password))
-          return done(null, false, req.flash('loginMessage', 'Incorrect password'));
+        if (!bcrypt.compareSync(password, user.local.password)) {
+          console.log("wrong password from passport");
+          return done('Invalid username/password', false, null);
+        }
 
-        return done(null, user);
-      });
+        return done(null, user.local.username);
+      }).catch(error => {
+        return done(error);
+      })
     }));
 };

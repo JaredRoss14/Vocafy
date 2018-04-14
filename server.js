@@ -31,12 +31,12 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.set('trust proxy', 1)
 // Set Express Session
 app.use(session({
   secret: process.env.SESSION_SECRET,
-  saveUninitialized: true,
-  resave: true,
+  saveUninitialized: false,
+  resave: false,
+  cookie: {secure: false },
   store: new MongoStore({
     mongooseConnection: mongoose.connection
   })
@@ -73,9 +73,10 @@ app.use(function (req, res, next) {
   next();
 });
 
+require('./routes/authentication')(app, passport);
+
 // Configure Routes
 app.use(routes);
-require('./routes/authentication')(app, passport);
 
 // Set up promises with mongoose
 mongoose.Promise = global.Promise;

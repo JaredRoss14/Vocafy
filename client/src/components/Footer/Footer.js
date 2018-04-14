@@ -8,7 +8,7 @@ const Footer = () => (
         <h4 className="text-center">Vocafy</h4>
         <h6 className="text-center">Crafted in RVA</h6>
         <h6 className="text-center">&copy; 2018 Designed by
-          <a href="https://github.com/JaredRoss14">Jared</a>
+          <a href="https://github.com/JaredRoss14"> Jared</a>
         </h6>
       </Row>  
     </Col>  

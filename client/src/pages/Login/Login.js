@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
-// import { Nav, Navbar, NavbarBrand, NavbarCollapse, NavbarHeader, NavbarToggle, NavDropdown, NavItem, Col, Row, Image, Button } from 'react-bootstrap';
+import LoginForm from '../../components/LoginForm';
+import { Grid, Row, Col } from 'react-bootstrap';
+import './Login.css';
 
 class Login extends Component {
   render() {
     return (
-      <div>
-        Login
-      </div>
+      <Grid className="login">
+        <Row>
+          <Col md={8} className="left-login">
+            <h2 className="text-center">Start The Conversation</h2>
+          </Col>  
+          <Col md={4}>
+            <LoginForm userLoggedIn={this.props.userLoggedIn} />
+          </Col>
+        </Row>      
+      </Grid>
     )
   }
 }
