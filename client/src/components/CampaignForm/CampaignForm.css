@@ -1,0 +1,18 @@
+.modalIcon {
+  font-size: 80px;
+}
+
+.modalButton {
+  padding-top: 15px;
+  padding-right: 10px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+}
+
+.modalOption {
+  font-size: 100px;
+}
+
+.hidden {
+    display: none;
+}

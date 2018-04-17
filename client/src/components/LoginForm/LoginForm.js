@@ -36,7 +36,7 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <Form>
+      <Form className="loginForm">
         <h1 className="text-center">Login</h1>
         <div>
           {this.state.message ? <p className="alert alert-primary">{this.state.message}</p> : ''}

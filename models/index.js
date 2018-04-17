@@ -1,4 +1,5 @@
 module.exports = {
   User: require("./users"),
-  Campaign: require("./campaign")
+  Campaign: require("./campaign"),
+  ChangeActivator: require("./changeactivator")
 };

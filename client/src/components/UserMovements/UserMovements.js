@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Row, Col } from 'react-bootstrap';
-import axios from 'axios';
+import React from 'react'; // insert , { Component}
+// import { Row, Col } from 'react-bootstrap';
+// import axios from 'axios';
 import './UserMovements.css';
 
 

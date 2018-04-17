@@ -10,7 +10,6 @@ import Footer from "./components/Footer";
 import Navheader from "./components/Navheader";
 import Wrapper from "./components/Wrapper";
 import axios from "axios";
-import { Button } from "react-bootstrap";
 import NavheaderLog from "./components/NavheaderLog";
 
 class App extends Component {
@@ -25,7 +24,7 @@ class App extends Component {
   componentDidMount() {
   axios.get('/user/loggedIn')
     .then(res => {
-      this.setState({ loggedIn: true, username: res.data.username });
+    this.setState({ loggedIn: true, username: res.data.username });
     })
     .catch(err => this.setState({ loggedIn: false }));
   };
@@ -36,9 +35,9 @@ class App extends Component {
 
   logOut = () => {
     axios.get('/user/logout')
-      .then(res => {
-        this.setState({ loggedIn: false })
-      });
+    .then(res => {
+      this.setState({ loggedIn: false })
+    });
   }
 
 render() {
@@ -47,7 +46,6 @@ return (
     <div>
       <Wrapper>
         <Navheader />
-        {/* <Button onClick={this.logOut}>LogOut!</Button>   */}
           <Switch>
             <Route exact path="/" component={SplashScreen} />
             <Route exact path="/home" component={Home} />
