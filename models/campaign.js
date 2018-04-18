@@ -1,30 +1,82 @@
 const mongoose = require('mongoose');
 
 const campaignSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
+  createdDate: {
+    type: Date,
+    default: Date.now
   },
   author: {
     type: String,
-    required: true
+    required: false,
   },
-  goal: {
+  campaignName: {
     type: String,
     required: true
   },
-  body: {
-    type: String,
-    required: true
-  },
-  contacts: {
+  campaignUrl: {
     type: String,
     required: false
   },
-  customURL: {
+  summary: {
     type: String,
-    required:false
+    required: true
+  },
+  overview: {
+    type: String,
+    required: true
+  },
+  changeActivators: [],
+  socialMedia: {
+    twitterUrl: {
+      type: String,
+      required: false
+    },
+    facebookUrl: {
+      type: String,
+      required: false
+    },
+    InstagramUrl: {
+      type: String,
+      required: false
+    },
+  },
+  campaignTweets: {
+    supports: {
+      type: String,
+      required: false
+    },
+    opposes: {
+      type: String,
+      required: false
+    },
+    undecided: {
+      type: String,
+      required: false
+    },
+    unknown: {
+      type: String,
+      required: false
+    },
+  },
+  campaignEmails: {
+    supports: {
+      type: String,
+      required: false
+    },
+    opposes: {
+      type: String,
+      required: false
+    },
+    undecided: {
+      type: String,
+      required: false
+    },
+    unknown: {
+      type: String,
+      required: false
+    },
   }
+
 });
 
 module.exports = mongoose.model('Campaign', campaignSchema);

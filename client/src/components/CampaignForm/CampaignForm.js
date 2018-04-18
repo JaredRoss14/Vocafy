@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, FormControl, FormGroup, ControlLabel, Button, InputGroup, Modal, Col, Row, Image } from 'react-bootstrap';
 import axios from 'axios';
 import './CampaignForm.css';
+import API from "../../utils/API";
 
 
 class CampaignForm extends Component {
@@ -37,42 +38,16 @@ class CampaignForm extends Component {
       activatorWebsite: "",
       twitterButtonName: "",
       showModal: false,
-      tweetModal: false,
-      emailModal: false,
-      tweetPageNumber: 0,
     }
 
     this.handleShow = this.handleShow.bind(this);
-    this.handleTweetShow = this.handleTweetShow.bind(this);
     this.handleShowNext = this.handleShowNext.bind(this);
-    this.handleTweetShowNext = this.handleTweetShowNext.bind(this);
     this.handleShowPrevious = this.handleShowPrevious.bind(this); 
-    this.handleTweetShowPrevious = this.handleTweetShowPrevious.bind(this); 
     this.handleClose = this.handleClose.bind(this);
     this.handleOrganization = this.handleOrganization.bind(this);
     this.handleIndividual = this.handleIndividual.bind(this);
     this.handleFormInput = this.handleFormInput.bind(this);
     this.handleModalSubmit = this.handleModalSubmit.bind(this);
-    this.handleShowSupportTweet = this.handleShowSupportTweet.bind(this);
-    this.handleShowOppositionTweet = this.handleShowOppositionTweet.bind(this);
-    this.handleShowUnknownTweet = this.handleShowUnknownTweet.bind(this);
-    this.handleShowUndecidedTweet = this.handleShowUndecidedTweet.bind(this);
-  }
-
-  handleShowSupportTweet() {
-    this.setState({tweetModal: 2})
-  }
-
-  handleShowOppositionTweet() {
-    this.setState({tweetModal: 3})
-  }
-
-  handleShowUnknownTweet() {
-    this.setState({tweetModal: 4})
-  }
-
-  handleShowUndecidedTweet() {
-    this.setState({ tweetModal: 5 })
   }
 
   handleShow() {
@@ -91,35 +66,18 @@ class CampaignForm extends Component {
     });
   }
 
-  handleTweetShow() {
-    this.setState({
-      tweetModal: true,
-      tweetPageNumber: 1
-    });
-  }
-
   handleShowNext() {
     this.setState({ modalPageNumber: this.state.modalPageNumber + 1})
-  }
-
-  handleTweetShowNext() {
-    this.setState({ tweetPageNumber: this.state.tweetPageNumber + 1 })
   }
 
   handleShowPrevious() {
     this.setState({ modalPageNumber: this.state.modalPageNumber - 1 })
   }
 
-  handleTweetShowPrevious() {
-    this.setState({ tweetPageNumber: this.state.tweetPageNumber - 1 })
-  }
-
   handleClose() {
     this.setState({
       showModal: false,
-      tweetModal: false,
       modalPageNumber: 0,
-      tweetPageNumber: 0
     });
   }
 
@@ -151,12 +109,7 @@ class CampaignForm extends Component {
       website: this.state.activatorWebsite,
       author: this.state.username
     };
-    let changeActivatorArray = this.state.changeActivators
-    if (changeActivatorArray.length === 0) {
-      changeActivatorArray.push(submission)
-    } else {
-      changeActivatorArray.concat([submission]);
-    }; 
+    let changeActivators = this.state.changeActivators.concat([submission]);
     this.setState({
       activatorType: "",
       activatorName: "",
@@ -167,18 +120,39 @@ class CampaignForm extends Component {
       activatorTwitter: "",
       activatorPhone: 0,
       activatorWebsite: "",
-      changeActivators: changeActivatorArray
-    });
-    console.log(this.state.changeActivators);
+      changeActivators
+    }, () => console.log(this.state.changeActivators));
   }
 
   handleFormInput(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   }
-
+  
   onFormSubmit = (event) => {
     event.preventDefault();
+    API.createCampaign({
+      author: this.state.username,
+      campaignName: this.state.campaign,
+      campaignUrl: this.state.campaignPath,
+      summary: this.state.summary,
+      overview: this.state.overview,
+      socialMedia:
+        {
+          twitterUrl: this.state.campaignTwitter,
+          facebookUrl: this.state.campaignFacebook,
+          instagramUrl: this.state.campaignInstagram
+        },
+      campaignTweets:
+        {
+        supports: this.state.supportsTweet,
+        opposes: this.state.opposesTweet,
+        undecided: this.state.undecidedTweet,
+        unknown: this.state.unknownTweet
+        },
+    })
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err));
   }
 
   render() {
@@ -561,92 +535,55 @@ class CampaignForm extends Component {
         <FormGroup>
           <ControlLabel>Tweets</ControlLabel>
           <InputGroup>
+            <InputGroup.Addon>
+              Supporting
+            </InputGroup.Addon>
+            <FormControl
+              type="text"
+              name="supportsTweet"
+              placeholder="Thank you for supporting our cause"
+              value={this.state.supportsTweet}
+              onChange={this.handleFormInput}
+            />
+          </InputGroup>
+          <InputGroup>
+            <InputGroup.Addon>
+              Opposing
+            </InputGroup.Addon>
+            <FormControl
+              type="text"
+              name="opposesTweet"
+              placeholder="Here is why I think you should change your mind"
+              value={this.state.opposesTweet}
+              onChange={this.handleFormInput}
+            />
+          </InputGroup>
 
-          <Button className="modalButton" onClick={this.handleTweetShow}>
-            <i className="fas fa-plus-circle modalIcon"></i>
-          </Button>
+          <InputGroup>
+            <InputGroup.Addon>
+              Undecided  
+            </InputGroup.Addon>
+            <FormControl
+              type="text"
+              name="undecidedTweet"
+              placeholder="Here is why I think you should support my cause"
+              value={this.state.undecidedTweet}
+              onChange={this.handleFormInput}
+            />
+          </InputGroup>
 
-          </InputGroup>  
-
-          <Modal show={this.state.tweetModal} onHide={this.handleClose} className="modalDisplay">
-
-            {/* 
-            Twitter Modal Header 
-            */}
-
-            <Modal.Header closeButton>
-              <Modal.Title>
-                <span className={this.state.tweetPageNumber === 1 ? 'text-center' : 'hidden'}>For Campaign Supporters</span>
-                <span className={this.state.tweetPageNumber === 2 ? 'text-center' : 'hidden'}>For Campaign Opponents</span>
-                <span className={this.state.tweetPageNumber === 3 ? 'text-center' : 'hidden'}>For The Undecided</span>
-                <span className={this.state.tweetPageNumber === 4 ? 'text-center' : 'hidden'}>For The Unknown</span>
-              </Modal.Title>
-            </Modal.Header>
-            
-            <Modal.Body>
-              <Form>
-                <div className={this.state.tweetPageNumber === 1 ? '' : 'hidden'}>
-                  <FormGroup>
-                    <ControlLabel>For Your Supporters</ControlLabel>
-                    <FormControl
-                      type="text"
-                      name="supportsTweet"
-                      placeholder="A tweet to thank supporters of your cause..."
-                      value={this.state.supportsTweet}
-                      onChange={this.handleFormInput}
-                    />
-                  </FormGroup>  
-                </div>
-
-                <div className={this.state.tweetPageNumber === 2 ? '' : 'hidden'}>
-                  <FormGroup>
-                    <ControlLabel>For Your Opponents</ControlLabel>
-                    <FormControl
-                      type="text"
-                      name="opposesTweet"
-                      placeholder="A tweet to change someone's mind..."
-                      value={this.state.opposesTweet}
-                      onChange={this.handleFormInput}
-                    />
-                  </FormGroup> 
-                </div>  
-
-                <div className={this.state.tweetPageNumber === 3 ? '' : 'hidden'}>
-                  <FormGroup>
-                    <ControlLabel>For Undecideds</ControlLabel>
-                    <FormControl
-                      type="text"
-                      name="undecidedTweet"
-                      placeholder="Here's why my cause is important..."
-                      value={this.state.undecidedTweet}
-                      onChange={this.handleFormInput}
-                    />
-                  </FormGroup>
-                </div> 
-
-                <div className={this.state.tweetPageNumber === 4 ? '' : 'hidden'}>
-                  <FormGroup>
-                    <ControlLabel>For Unknown</ControlLabel>
-                    <FormControl
-                      type="text"
-                      name="unknownTweet"
-                      placeholder="This cause is important to me and I'd like to know where you stand..."
-                      value={this.state.unknownTweet}
-                      onChange={this.handleFormInput}
-                    />
-                  </FormGroup>
-                </div> 
-              </Form>
-            </Modal.Body>
-
-            <Modal.Footer>
-              <Button bsStyle="primary" className={this.state.tweetPageNumber > 1 ? '' : 'hidden'} onClick={this.handleTweetShowPrevious}>Back</Button>
-              <Button bsStyle="primary" className={this.state.tweetPageNumber < 4 ? '' : 'hidden'} onClick={this.handleTweetShowNext}>Next</Button>
-              <Button bsStyle="primary" className={this.state.tweetPageNumber === 4 ? '' : 'hidden'} onClick={this.handleTweetSubmit}>Save</Button>
-            </Modal.Footer>
-
-          </Modal>  
-
+          <InputGroup>
+            <InputGroup.Addon>
+              Unknown
+            </InputGroup.Addon>
+            <FormControl
+              type="text"
+              name="unknownTweet"
+              placeholder="I see that you are unaware of my campaign, here is why I think it is important."
+              value={this.state.unknownTweet}
+              onChange={this.handleFormInput}
+            />
+          </InputGroup>
         </FormGroup>
 
         <Button type="submit" onClick={this.onFormSubmit}>

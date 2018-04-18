@@ -45,7 +45,7 @@ return (
   <Router>
     <div>
       <Wrapper>
-        <Navheader />
+        <Navheader loggedIn={this.state.loggedIn} />
           <Switch>
             <Route exact path="/" component={SplashScreen} />
             <Route exact path="/home" component={Home} />
