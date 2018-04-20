@@ -10,6 +10,6 @@ router.route("/")
 router.route("/:id")
   .put(campaignController.update)
   .delete(campaignController.remove)
-  .get(campaignController.findById)
+  .get(campaignController.findById);
   
 module.exports = router;

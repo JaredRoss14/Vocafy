@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { Row, Col, ControlLabel, Button, Image, Media } from 'react-bootstrap';
+import React from 'react';
+import { Button, Image } from 'react-bootstrap';
 import './ChangeActivatorDisplay.css';
-import API from "../../utils/API";
 
 const ChangeActivatorDisplay = (props) => (
 

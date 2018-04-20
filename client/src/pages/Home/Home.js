@@ -3,8 +3,35 @@ import { Grid, Row, Col } from 'react-bootstrap';
 // import { Link } from "react-router-dom";
 import CampaignOverview from '../../components/CampaignOverview';
 import UserMovements from '../../components/UserMovements';
+import API from "../../utils/API";
 
 class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      campaigns: []
+    }
+  }
+
+  componentDidMount() {
+    this.loadTimeline()
+  }
+
+  loadTimeline = () => {
+    // Load campaign
+    API.findAllCampaigns()
+      .then(res => {
+        this.setState({
+          campaigns: res.data
+        }, () => {
+          console.log(this.state);
+        })
+      })
+      .catch(err => {
+        console.log("error in page mount: " + err.response);
+      })
+  }
+
   render() {
     return (
       <Grid>
@@ -18,7 +45,13 @@ class Home extends Component {
         </Row>
         <Row>
           <Col md={8}>
-            <CampaignOverview />
+            {this.state.campaigns.map(campaign => (
+              <CampaignOverview
+                key={campaign.index}
+                title={campaign.campaignName}
+                summary={campaign.summary}
+              />
+            ))}
           </Col>  
           <Col md={4}>
             <UserMovements />  

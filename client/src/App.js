@@ -47,11 +47,13 @@ return (
       <Wrapper>
 
         {/* Render nav based on logged in status */}
-        <Navheader loggedIn={this.state.loggedIn} />
+        <Navheader loggedIn={this.state.loggedIn} logOut={this.logOut} />
         <Switch>
 
           {/* Render homepage based on logged in status */}
           {this.state.loggedIn ? <Route exact path="/" component={Home} /> : <Route exact path="/" component={SplashScreen} />}
+
+          {/* <Route exact path="/" component={Home} /> */}
           
           {/* Login page that redirects to homepage when logged in */}
           <Route exact path="/login" render={() => this.state.loggedIn ? <Redirect to="/" /> : <Login userLoggedIn={this.userLoggedIn} />} />

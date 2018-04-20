@@ -33,8 +33,8 @@ app.use(bodyParser.json());
 
 // Set Express Session
 app.use(session({
-  secret: "keyboardcat",
-  saveUninitialized: false,
+  secret: process.env.SESSION_SECRET,
+  saveUninitialized: true,
   resave: false,
   cookie: {secure: false },
   store: new MongoStore({

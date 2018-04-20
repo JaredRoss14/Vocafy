@@ -31,7 +31,7 @@ module.exports = {
   findAll: function (req, res) {
     db.Campaign
       .find(req.query)
-      .sort({ date: -1 })
+      .sort({ createdDate: -1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

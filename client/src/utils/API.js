@@ -16,6 +16,10 @@ export default {
 
   findCampaign: function (campaignId) {
     return axios.get("/api/campaign/" + campaignId)
-  }
+  },
+
+  findAllCampaigns: function () {
+    return axios.get("/api/campaign/")
+  },
   
 };

@@ -28,16 +28,16 @@ const Navheader = (props) => (
               <NavItem eventKey={1} componentClass={Link} href="/" to="/">
                 <i className="fas fa-home"></i>
               </NavItem>
-              <NavItem eventKey={2} componentClass={Link} href="/signup" to="/campaign">
+              <NavItem eventKey={2} componentClass={Link} href="/" to="/">
                 <i className="far fa-user"></i>
               </NavItem>
-              <NavItem eventKey={3} componentClass={Link} href="/signup" to="/home">
+              <NavItem eventKey={3} componentClass={Link} href="/" to="/">
                 <i className="far fa-envelope"></i>
               </NavItem>
-              <NavItem eventKey={4} componentClass={Link} href="/signup" to="/home">
+              <NavItem eventKey={4} componentClass={Link} href="/movement" to="/movement">
                 <i className="far fa-edit"></i>
               </NavItem>
-              <NavItem eventKey={5} componentClass={Link} href="/signup" to="/home">
+              <NavItem eventKey={5} componentClass={Link} onClick={props.logOut} href="/" to="/">
                 <i className="fas fa-sign-out-alt"></i>
               </NavItem>
             </Nav>
