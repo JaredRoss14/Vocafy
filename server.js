@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 
 // Set Express Session
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: "keyboardcat",
   saveUninitialized: false,
   resave: false,
   cookie: {secure: false },
