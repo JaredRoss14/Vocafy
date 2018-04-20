@@ -34,7 +34,7 @@ const Navheader = (props) => (
               <NavItem eventKey={3} componentClass={Link} href="/" to="/">
                 <i className="far fa-envelope"></i>
               </NavItem>
-              <NavItem eventKey={4} componentClass={Link} href="/movement" to="/movement">
+              <NavItem eventKey={4} componentClass={Link} href="/startmovement" to="/startmovement">
                 <i className="far fa-edit"></i>
               </NavItem>
               <NavItem eventKey={5} componentClass={Link} onClick={props.logOut} href="/" to="/">

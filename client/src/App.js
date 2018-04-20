@@ -62,7 +62,7 @@ return (
           <Route exact path="/signup" component={SignUp} />
 
           {/* Figure out campaign navigation */}
-          <Route exact path="/campaign" render={() => this.state.loggedIn ? <Campaign userLoggedIn={this.userLoggedIn} /> : <Redirect to="/" />} />
+          <Route exact path="/startmovement" render={() => this.state.loggedIn ? <Campaign userLoggedIn={this.userLoggedIn} /> : <Redirect to="/" />} />
           {/* <Route exact path="/movement" component={Campaign} /> */}
 
           {/* Find Campaign by URL */}
