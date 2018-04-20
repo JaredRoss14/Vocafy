@@ -33,7 +33,7 @@ module.exports = {
       .find(req.query)
       .sort({ createdDate: -1 })
       .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+      .catch(err => res.json(err));
   },
 
 }

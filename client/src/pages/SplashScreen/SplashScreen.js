@@ -15,25 +15,25 @@ export default class SplashScreen extends Component {
     }
   }
 
-  componentDidMount() {
-    this.loadCampaigns()
-  }
+  // componentDidMount() {
+  //   this.loadCampaigns()
+  // }
 
-  loadCampaigns = () => {
-    // Load campaign
-    API.findAllCampaigns()
-      .then(res => {
-        const campaigns = res.data;
-        this.setState({
-          campaigns
-        }, () => {
-          console.log(this.state.campaigns);
-        })
-      })
-      .catch(err => {
-        console.log("error in page mount: " + err.response);
-      })
-  }
+  // loadCampaigns = () => {
+  //   // Load campaign
+  //   API.findAllCampaigns()
+  //     .then(res => {
+  //       const campaigns = res.data;
+  //       this.setState({
+  //         campaigns
+  //       }, () => {
+  //         console.log(this.state.campaigns);
+  //       })
+  //     })
+  //     .catch(err => {
+  //       console.log("error in page mount: " + err.response);
+  //     })
+  // }
 
   render() {
     return (

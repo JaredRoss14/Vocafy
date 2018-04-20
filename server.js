@@ -16,8 +16,22 @@ const PORT = process.env.PORT || 3001;
 const MongoStore = require('connect-mongo')(session);
 const morgan = require('morgan');
 
+console.log("TEST 1");
+console.log("===============");
+console.log("===============");
+console.log("===============");
+console.log("===============");
+console.log("===============");
+console.log("===============");
 // Set up morgan
 app.use(morgan('dev'));
+console.log("TEST 2");
+console.log("===============");
+console.log("===============");
+console.log("===============");
+console.log("===============");
+console.log("===============");
+console.log("===============");
 
 // Set Up Passport
 const passport = require("passport");
@@ -31,10 +45,12 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+console.log("Before Express Session")
+
 // Set Express Session
 app.use(session({
   secret: process.env.SESSION_SECRET,
-  saveUninitialized: true,
+  saveUninitialized: false,
   resave: false,
   cookie: {secure: false },
   store: new MongoStore({
