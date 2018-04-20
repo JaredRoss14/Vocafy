@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Row, Grid } from 'react-bootstrap';
 
 const Footer = () => (
-  <Grid className="fluid">
+  <Grid fluid>
     <Col>  
       <Row>
         <h4 className="text-center">Vocafy</h4>

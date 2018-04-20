@@ -25,7 +25,11 @@ const campaignSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  changeActivators: [],
+  changeActivators: 
+    [{
+      type: mongoose.Schema.ObjectId,
+      ref: 'ChangeActivator'
+    }],
   socialMedia: {
     twitterUrl: {
       type: String,

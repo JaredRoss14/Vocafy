@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Grid, Row, Col, Image, Button } from 'react-bootstrap';
-import { Link } from "react-router-dom";
+import { Grid, Row, Col } from 'react-bootstrap';
+// import { Link } from "react-router-dom";
 import CampaignOverview from '../../components/CampaignOverview';
 import UserMovements from '../../components/UserMovements';
 

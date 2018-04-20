@@ -3,13 +3,14 @@ const changeActivatorController = require("../../controllers/changeActivatorCont
 
 // Matches with "/api/changeactivator"
 router.route("/")
-  .post(changeActivatorController.create);
+  .post(changeActivatorController.create)
+  .get(changeActivatorController.findByIds);
 
 // Matches with "/api/changeactivator/:id"
-router
-  .route("/:id")
-  // .get(booksController.findById)
-  // .put(booksController.update)
-  // .delete(booksController.remove);
+router.route("/:id")
+  .get(changeActivatorController.findByIds)
+  .delete(changeActivatorController.remove)
+  .put(changeActivatorController.update);
+
 
 module.exports = router;

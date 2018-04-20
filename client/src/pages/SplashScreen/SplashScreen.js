@@ -6,7 +6,7 @@ import './SplashScreen.css';
 export default class SplashScreen extends Component {
   render() {
     return (
-      <Grid fluid={true}>
+      <Grid fluid>
         <Row className="show-grid text-center hero">
           <Col md={8} mdOffset={2} className="heroHeader">
             <h1>Giving A Voice To The People</h1>
@@ -14,7 +14,7 @@ export default class SplashScreen extends Component {
             <Link to="/"><Button className="heroButton">Create Campaign</Button></Link>
           </Col>
         </Row>
-        <Row fluid={true} className="show-grid text-center row-two">
+        <Row fluid className="show-grid text-center row-two">
           <Col mdOffset={1} md={3} xs={12}>
               <Image src={require("../../images/voice-announcer.jpg")} circle className="row-two-image"/>
             <h2>Vocalize.</h2>

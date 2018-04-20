@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Row, Col, ControlLabel, Button, Image, Media } from 'react-bootstrap';
-import axios from 'axios';
+import { Media } from 'react-bootstrap';
+// import axios from 'axios';
 import './CampaignOverview.css';
 
 class CampaignOverview extends Component {
@@ -9,7 +9,7 @@ class CampaignOverview extends Component {
     return (
       <Media className="campaignOverview">
         <Media.Left>
-          <img src="http://via.placeholder.com/150x150"/>
+          <img src="http://via.placeholder.com/150x150" alt=""/>
         </Media.Left>
         <Media.Body>
           <Media.Heading>Campaign Header</Media.Heading>

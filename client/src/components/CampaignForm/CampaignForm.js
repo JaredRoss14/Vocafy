@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Form, FormControl, FormGroup, ControlLabel, Button, InputGroup, Modal, Col, Row, Image } from 'react-bootstrap';
-import axios from 'axios';
+import { Redirect } from 'react-router-dom'
 import './CampaignForm.css';
 import API from "../../utils/API";
-
+import ChangeActivatorForm from "../ChangeActivatorForm";
+import newId from '../../utils/newid';
 
 class CampaignForm extends Component {
   constructor(props) {
@@ -38,6 +39,9 @@ class CampaignForm extends Component {
       activatorWebsite: "",
       twitterButtonName: "",
       showModal: false,
+      formSubmitted: false,
+      changeActivatorsId: [],
+      redirect: false,
     }
 
     this.handleShow = this.handleShow.bind(this);
@@ -81,6 +85,10 @@ class CampaignForm extends Component {
     });
   }
 
+  componentWillMount() {
+    this.id = newId();
+  }
+
   handleOrganization() {
     this.setState({
       modalPageNumber: 5,
@@ -95,6 +103,18 @@ class CampaignForm extends Component {
     })
   }
 
+  cleanTwitterHandle = (handle) => {
+    let twitterAccount = handle.replace("@", "");
+    return twitterAccount
+  }
+
+  twitterHandleUri = (handle) => {
+    let newHandle = ".@" + handle + " "
+    let uriHandle = encodeURI(newHandle);
+    let uri = "http://twitter.com/home?status=" + uriHandle;
+    return uri
+  }
+
   handleModalSubmit = (event) => {
     event.preventDefault();
     let submission = {
@@ -104,10 +124,11 @@ class CampaignForm extends Component {
       position: this.state.activatorPosition,
       stance: this.state.activatorStance,
       email: this.state.activatorEmail,
-      twitter: this.state.activatorTwitter,
+      twitter: this.cleanTwitterHandle(this.state.activatorTwitter),
       phone: this.state.activatorPhone,
       website: this.state.activatorWebsite,
-      author: this.state.username
+      author: this.state.username,
+      uri: this.twitterHandleUri(this.cleanTwitterHandle(this.state.activatorTwitter))
     };
     let changeActivators = this.state.changeActivators.concat([submission]);
     this.setState({
@@ -120,8 +141,25 @@ class CampaignForm extends Component {
       activatorTwitter: "",
       activatorPhone: 0,
       activatorWebsite: "",
-      changeActivators
+      changeActivators,
+      showModal: false,
+      modalPageNumber: 0
     }, () => console.log(this.state.changeActivators));
+    API.createChangeActivator({
+      type: submission.type,
+      name: submission.name,
+      employer: submission.employer,
+      position: submission.position,
+      stance: submission.stance,
+      email: submission.email,
+      twitter: submission.twitter,
+      phone: submission.phone,
+      website: submission.website,
+      author: submission.author,
+      twitterUri: submission.uri
+    })
+      .then(res => this.state.changeActivatorsId.push(res.data._id))
+      .catch(err => console.log(err));
   }
 
   handleFormInput(event) {
@@ -137,6 +175,7 @@ class CampaignForm extends Component {
       campaignUrl: this.state.campaignPath,
       summary: this.state.summary,
       overview: this.state.overview,
+      changeActivators: this.state.changeActivatorsId,
       socialMedia:
         {
           twitterUrl: this.state.campaignTwitter,
@@ -145,19 +184,23 @@ class CampaignForm extends Component {
         },
       campaignTweets:
         {
-        supports: this.state.supportsTweet,
-        opposes: this.state.opposesTweet,
-        undecided: this.state.undecidedTweet,
-        unknown: this.state.unknownTweet
+          supports: this.state.supportsTweet,
+          opposes: this.state.opposesTweet,
+          undecided: this.state.undecidedTweet,
+          unknown: this.state.unknownTweet
         },
+    }).then(res => {
+      console.log(res.data);
+      this.setState({ redirect: true });
     })
-      .then(res => console.log(res.data))
       .catch(err => console.log(err));
   }
+
 
   render() {
     return (
       <Form className="campaignForm">
+        {this.state.redirect ? <Redirect to='/' /> : ''}  
         <h2>Build Your Movement</h2>
 
         {/* 
@@ -167,12 +210,12 @@ class CampaignForm extends Component {
         <FormGroup>
           <ControlLabel>Campaign:</ControlLabel>
           <FormControl
-            type="text"
-            name="campaign"
-            placeholder="Name Your Movement..."
-            value={this.state.campaign}
-            onChange={this.handleFormInput}
-          />
+              type="text"
+              name="campaign"
+              placeholder="Name Your Movement..."
+              value={this.state.campaign}
+              onChange={this.handleFormInput}
+            />
         </FormGroup>
 
         {/* 
@@ -215,7 +258,7 @@ class CampaignForm extends Component {
         <FormGroup>
           <ControlLabel>Overview</ControlLabel>
           <FormControl
-            type="text"
+            type="textarea"
             name="overview"
             placeholder="Describe Your Movement"
             value={this.state.overview}
@@ -235,9 +278,23 @@ class CampaignForm extends Component {
             Modal Display Button 
             */}     
 
-            <Button className="modalButton" onClick={this.handleShow}>
-              <i className="fas fa-plus-circle modalIcon"></i>
-            </Button>
+            <div className="changeActivatorFormIcon">
+              <Button className="changeActivatorButton" onClick={this.handleShow}>
+                <i className="fas fa-plus-circle changeActivatorLogo"></i>
+              </Button>
+            </div> 
+
+            {/* 
+            Change Activator Mapping 
+            */}
+
+            {this.state.changeActivators.map(activator => (
+              <ChangeActivatorForm
+              key={activator.index}
+              name={activator.name}
+              type={activator.type}
+              stance={activator.stance}/>
+            ))}   
             
             {/* 
             Modal 
@@ -336,17 +393,18 @@ class CampaignForm extends Component {
                       <ControlLabel>Stance:</ControlLabel>
                       <FormControl
                         componentClass="select"
-                        placeholder=""
+                        placeholder="select"
                         type="text"
                         name="activatorStance"
                         onChange={this.handleFormInput}
                         value={this.state.activatorStance}
-                      > 
-                        <option value="supports">Supports</option>  
+                      >
+                        <option value="select">Select</option>
+                        <option value="supports">Supports</option>
                         <option value="opposes">Opposes</option>
                         <option value="undecided">Undecided</option>
                         <option value="unknown">No Stance</option>
-                      </FormControl>  
+                      </FormControl>
                     </FormGroup>
                   </div>
 
@@ -401,26 +459,19 @@ class CampaignForm extends Component {
                       <ControlLabel>Stance:</ControlLabel>
                       <FormControl
                         componentClass="select"
-                        placeholder=""
+                        placeholder="select"
                         type="text"
                         name="activatorStance"
+                        onChange={this.handleFormInput}
                         value={this.state.activatorStance}
                       >
+                        <option value="select">Select</option>  
                         <option value="supports">Supports</option>
                         <option value="opposes">Opposes</option>
                         <option value="undecided">Undecided</option>
                         <option value="unknown">No Stance</option>
                       </FormControl>
                     </FormGroup>
-                    
-                    <FormGroup>
-                      <ControlLabel>Logo:</ControlLabel>
-                      <FormControl
-                        type="text"
-                        name=""
-                        placeholder="Upload Logo"
-                      />
-                    </FormGroup> 
                   </div>
 
                   <div className={this.state.modalPageNumber === 6 ? '' : 'hidden'}>
@@ -498,34 +549,32 @@ class CampaignForm extends Component {
 
         <FormGroup>
           <ControlLabel>External Links</ControlLabel>
-            <InputGroup>
-            <InputGroup.Addon>
-              <Image src={require("../../images/twitter-logo-button.png")}/>
-            </InputGroup.Addon>
+            <InputGroup className="inputGroupMarginBottom">
+            <InputGroup.Addon><i className="fab fa-twitter"></i></InputGroup.Addon>
               <FormControl
                 type="text"
                 name="campaignTwitter"
-                placeholder="Twitter"
+                placeholder="www.twitter.com/YourMovement"
                 value={this.state.campaignTwitter}
                 onChange={this.handleFormInput}
               />
           </InputGroup>
-          <InputGroup>
-            <InputGroup.Addon><Image src={require("../../images/facebook-logo-button.png")}/></InputGroup.Addon>
+          <InputGroup className="inputGroupMarginBottom">
+            <InputGroup.Addon><i className="fab fa-facebook-f"></i></InputGroup.Addon>
             <FormControl
               type="text"
               name="campaignFacebook"
-              placeholder="Facebook"
+              placeholder="www.facebook.com/YourMovement"
               value={this.state.campaignFacebook}
               onChange={this.handleFormInput}
             />
           </InputGroup>
           <InputGroup>
-            <InputGroup.Addon>I</InputGroup.Addon>
+            <InputGroup.Addon><i className="fab fa-instagram"></i></InputGroup.Addon>
             <FormControl
               type="text"
               name="campaignInstagram"
-              placeholder="Instagram"
+              placeholder="www.instagram.com/YourMovement"
               value={this.state.campaignInstagram}
               onChange={this.handleFormInput}
             />
@@ -534,9 +583,9 @@ class CampaignForm extends Component {
 
         <FormGroup>
           <ControlLabel>Tweets</ControlLabel>
-          <InputGroup>
+          <InputGroup className="inputGroupMarginBottom" >
             <InputGroup.Addon>
-              Supporting
+              <span className="tweetFormSupporting">Supporting</span>
             </InputGroup.Addon>
             <FormControl
               type="text"
@@ -546,9 +595,9 @@ class CampaignForm extends Component {
               onChange={this.handleFormInput}
             />
           </InputGroup>
-          <InputGroup>
+          <InputGroup className="inputGroupMarginBottom">
             <InputGroup.Addon>
-              Opposing
+              <span className="tweetFormOpposing">Opposing</span>
             </InputGroup.Addon>
             <FormControl
               type="text"
@@ -559,7 +608,7 @@ class CampaignForm extends Component {
             />
           </InputGroup>
 
-          <InputGroup>
+          <InputGroup className="inputGroupMarginBottom">
             <InputGroup.Addon>
               Undecided  
             </InputGroup.Addon>
@@ -574,7 +623,7 @@ class CampaignForm extends Component {
 
           <InputGroup>
             <InputGroup.Addon>
-              Unknown
+              <span className="tweetFormUnknown">Unknown</span>
             </InputGroup.Addon>
             <FormControl
               type="text"

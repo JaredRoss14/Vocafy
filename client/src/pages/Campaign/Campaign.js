@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Grid, Row, Col } from 'react-bootstrap';
-import { Link } from "react-router-dom";
-import CampaignOverview from '../../components/CampaignOverview';
-import UserMovements from '../../components/UserMovements';
+// import { Link } from "react-router-dom";
 import CampaignForm from '../../components/CampaignForm';
 
 class Campaign extends Component {

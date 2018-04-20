@@ -25,6 +25,10 @@ const changeActivatorSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  twitterUri: {
+    type: String,
+    required: false
+  },
   phone: {
     type: Number,
     required: false
@@ -35,8 +39,9 @@ const changeActivatorSchema = new mongoose.Schema({
   },
   author: {
     type: String,
-    required: true
-  }
+    required: false
+  },
+
 });
 
 module.exports = mongoose.model('ChangeActivator', changeActivatorSchema);
