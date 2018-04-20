@@ -52,7 +52,7 @@ return (
 
           {/* Render homepage based on logged in status */}
           {this.state.loggedIn ? <Route exact path="/" component={Home} /> : <Route exact path="/" component={SplashScreen} />}
-
+          
           {/* <Route exact path="/" component={Home} /> */}
           
           {/* Login page that redirects to homepage when logged in */}
@@ -62,8 +62,8 @@ return (
           <Route exact path="/signup" component={SignUp} />
 
           {/* Figure out campaign navigation */}
-          {/* <Route exact path="/campaign" render={() => this.state.loggedIn ? <Campaign userLoggedIn={this.userLoggedIn} /> : <Redirect to="/" />} /> */}
-          <Route exact path="/movement" component={Campaign} />
+          <Route exact path="/campaign" render={() => this.state.loggedIn ? <Campaign userLoggedIn={this.userLoggedIn} /> : <Redirect to="/" />} />
+          {/* <Route exact path="/movement" component={Campaign} /> */}
 
           {/* Find Campaign by URL */}
           <Route exact path="/movement/:id?" component={CampaignLandingPage} />
