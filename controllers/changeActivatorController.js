@@ -32,17 +32,6 @@ module.exports = {
       .findById(req.params.id)
       .then(dbModel => console.log(dbModel))
       .catch(err => res.json(err));
-  },
-
-  // findByIds: function (req, res) {
-  //   let searchArray = req.params;
-  //   for (let i = 0; i < searchArray.length; i++) {
-  //     db.ChangeActivator
-  //   }
-  //   db.ChangeActivator
-  //     .findById(req.params)
-  //     .then(dbModel => res.json(dbModel))
-  //     .catch(err => res.json(err));
-  // },
+  }
 
 }
