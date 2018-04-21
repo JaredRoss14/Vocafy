@@ -15,26 +15,6 @@ export default class SplashScreen extends Component {
     }
   }
 
-  componentDidMount() {
-    this.loadCampaigns()
-  }
-
-  loadCampaigns = () => {
-    // Load campaign
-    API.findAllCampaigns()
-      .then(res => {
-        const campaigns = res.data;
-        this.setState({
-          campaigns
-        }, () => {
-          console.log(this.state.campaigns);
-        })
-      })
-      .catch(err => {
-        console.log("error in page mount: " + err.response);
-      })
-  }
-
   render() {
     return (
       <Grid fluid>
@@ -59,20 +39,6 @@ export default class SplashScreen extends Component {
             <h2>Mobilize.</h2>
           </Col>
         </Row>
-        <Row className="show-grid text-center">
-          <Col md={12}>
-          <h2>Popular Campaigns</h2>  
-          </Col>  
-        </Row>  
-        <Row className="show-grid text-center">
-          {this.state.campaigns.slice(0, 3).map(campaign => (
-              <SplashScreenCampaign
-                name={campaign.campaignName}
-                summary={campaign.summary}
-              />
-            ))
-          }  
-        </Row> 
       </Grid>
     )
   }
