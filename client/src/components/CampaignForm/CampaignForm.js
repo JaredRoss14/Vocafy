@@ -34,7 +34,7 @@ class CampaignForm extends Component {
       activatorStance: "",
       activatorEmail: "",
       activatorTwitter: "",
-      activatorPhone: 0,
+      activatorPhone: "",
       activatorWebsite: "",
       twitterButtonName: "",
       showModal: false,
@@ -240,7 +240,7 @@ class CampaignForm extends Component {
         */}
 
         <FormGroup>
-          <ControlLabel>Summary</ControlLabel>
+          <ControlLabel>Summary:</ControlLabel>
           <FormControl
             type="text"
             name="summary"
@@ -255,7 +255,7 @@ class CampaignForm extends Component {
         */}
 
         <FormGroup>
-          <ControlLabel>Overview</ControlLabel>
+          <ControlLabel>Overview:</ControlLabel>
           <FormControl
             type="textarea"
             name="overview"
@@ -270,7 +270,7 @@ class CampaignForm extends Component {
         */}        
 
         <FormGroup>
-          <ControlLabel>Change Activators</ControlLabel>
+          <ControlLabel>Change Activators:</ControlLabel>
           <InputGroup>
             
             {/* 
@@ -506,14 +506,14 @@ class CampaignForm extends Component {
                       <FormControl
                         type="text"
                         name="activatorTwitter"
-                        placeholder="info@company.com"
+                        placeholder="@companyX"
                         value={this.state.activatorTwitter}
                         onChange={this.handleFormInput}
                       />
                     </FormGroup>
 
                     <FormGroup>
-                      <ControlLabel>Website</ControlLabel>
+                      <ControlLabel>Website:</ControlLabel>
                       <FormControl
                         type="text"
                         name="activatorWebsite"
@@ -549,7 +549,7 @@ class CampaignForm extends Component {
         {/* {FIND} */}
 
         <FormGroup>
-          <ControlLabel>External Links</ControlLabel>
+          <ControlLabel>External Links:</ControlLabel>
             <InputGroup className="inputGroupMarginBottom">
             <InputGroup.Addon><i className="fab fa-twitter"></i></InputGroup.Addon>
               <FormControl
@@ -583,7 +583,7 @@ class CampaignForm extends Component {
         </FormGroup>
 
         <FormGroup>
-          <ControlLabel>Tweets</ControlLabel>
+          <ControlLabel>Tweets:</ControlLabel>
           <InputGroup className="inputGroupMarginBottom" >
             <InputGroup.Addon>
               <span className="tweetFormSupporting">Supporting</span>
@@ -636,8 +636,8 @@ class CampaignForm extends Component {
           </InputGroup>
         </FormGroup>
 
-        <Button type="submit" onClick={this.onFormSubmit}>
-          Create Campaign
+        <Button type="submit" bsStyle="warning" className="text-center"onClick={this.onFormSubmit}>
+          Create Movement
         </Button>
       </Form>
     )
