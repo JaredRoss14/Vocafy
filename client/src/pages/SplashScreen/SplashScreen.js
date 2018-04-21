@@ -15,29 +15,6 @@ export default class SplashScreen extends Component {
     }
   }
 
-<<<<<<< HEAD
-  // componentDidMount() {
-  //   this.loadCampaigns()
-  // }
-
-  // loadCampaigns = () => {
-  //   // Load campaign
-  //   API.findAllCampaigns()
-  //     .then(res => {
-  //       const campaigns = res.data;
-  //       this.setState({
-  //         campaigns
-  //       }, () => {
-  //         console.log(this.state.campaigns);
-  //       })
-  //     })
-  //     .catch(err => {
-  //       console.log("error in page mount: " + err.response);
-  //     })
-  // }
-
-=======
->>>>>>> f81bc5a540c3d8c34665994837fbf4662ae4ca83
   render() {
     return (
       <Grid fluid>
