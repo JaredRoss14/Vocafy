@@ -50,6 +50,7 @@ class Home extends Component {
                 key={campaign.index}
                 title={campaign.campaignName}
                 summary={campaign.summary}
+                url={campaign._id}
               />
             )) : <CampaignOverview
                 title="Filler Title"

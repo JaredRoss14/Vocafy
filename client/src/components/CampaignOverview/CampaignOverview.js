@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Media } from 'react-bootstrap';
-// import axios from 'axios';
 import './CampaignOverview.css';
 
 const CampaignOverview = (props) => (
@@ -10,7 +9,7 @@ const CampaignOverview = (props) => (
     </Media.Left>
     <Media.Body>
       <Media.Heading>{props.title}</Media.Heading>
-      <p>{props.summary}</p>
+      <p>{props.summary} <a href={`/movement/${props.url}`}>Learn More...</a></p>
     </Media.Body>
   </Media>
 )

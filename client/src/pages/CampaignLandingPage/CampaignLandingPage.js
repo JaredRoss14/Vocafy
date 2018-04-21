@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, Image } from 'react-bootstrap';
 import API from "../../utils/API";
 import ChangeActivatorDisplay from "../../components/ChangeActivatorDisplay";
 import { encode } from "punycode";
+import './CampaignLandingPage.css';
 
 class CampaignLandingPage extends Component {
 
@@ -75,29 +76,33 @@ class CampaignLandingPage extends Component {
   render() {
     return (
       <Grid className="campaignLandingPage">
-        <Row>
+        <Row className="text-center">
+          <Image src="https://via.placeholder.com/250x250/" circle/>
+        </Row>  
+        <Row className="text-center">
           <Col md={12}>
-            <h1 className="text-center">{this.state.campaignName}</h1> 
-            <a href={this.state.socialMedia.facebook}><i className="fab fa-facebook-f"></i></a>
-            <a href={this.state.socialMedia.instagram}><i className="fab fa-instagram"></i></a>
-            <a href={this.state.socialMedia.twitter}><i className="fab fa-twitter"></i></a>
+            <h1>{this.state.campaignName}</h1> 
+            <a href={this.state.socialMedia.facebook}><i className="fab fa-facebook-f socialIcon"></i></a>
+            <a href={this.state.socialMedia.instagram}><i className="fab fa-instagram socialIcon"></i></a>
+            <a href={this.state.socialMedia.twitter}><i className="fab fa-twitter socialIcon"></i></a>
           </Col>
         </Row>
         <Row>
           <Col md={12}>
-            <h4>Summary:</h4>
+            <h2>Summary:</h2>
             <p>{this.state.summary}</p>
           </Col>
         </Row>
         <Row>
           <Col md={12}>
-            <h4>Description:</h4>
+            <h2>Description:</h2>
             <p>{this.state.overview}</p>
           </Col>
         </Row>
         <Row>
           <Col md={12}>
-            <h4>Key Influencers:</h4>
+            <h2>Key Influencers:</h2>
+            <h4 className="text-center">Those in <span className="opposeText">RED</span> Oppose, Those in <span className="supportText">GREEN</span> support, Those in <span className="undecidedText">YELLOW</span> are undecided, Those in <span className="unknownText">GRAY</span> have yet to take a stance.</h4>
             <div className="changeActivatorDisplay">
               {this.state.changeActivators.map(activator => (
                 <ChangeActivatorDisplay

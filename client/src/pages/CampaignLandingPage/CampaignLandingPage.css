@@ -1,0 +1,25 @@
+.socialIcon {
+  font-size: 30px;
+  margin: 10px;
+}
+
+.undecidedText, 
+.supportText, 
+.opposeText, 
+.unknownText {
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.undecidedText {
+  color: #c7c700;
+}
+.supportText {
+  color: #00ff00;
+}
+.opposeText {
+  color: #ff0000
+}
+.unknownText {
+  color: #878787
+}

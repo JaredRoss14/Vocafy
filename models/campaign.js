@@ -39,7 +39,7 @@ const campaignSchema = new mongoose.Schema({
       type: String,
       required: false
     },
-    InstagramUrl: {
+    instagramUrl: {
       type: String,
       required: false
     },

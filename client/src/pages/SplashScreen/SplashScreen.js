@@ -15,6 +15,25 @@ export default class SplashScreen extends Component {
     }
   }
 
+  componentDidMount() {
+    this.loadTimeline()
+  }
+
+  loadTimeline = () => {
+    // Load campaign
+    API.findAllCampaigns()
+      .then(res => {
+        this.setState({
+          campaigns: res.data
+        }, () => {
+          console.log(this.state);
+        })
+      })
+      .catch(err => {
+        console.log("error in page mount: " + err.response);
+      })
+  }
+
   render() {
     return (
       <Grid fluid>
@@ -38,6 +57,20 @@ export default class SplashScreen extends Component {
             <Image src={require("../../images/worldwide.jpg")} circle className="row-two-image"/>
             <h2>Mobilize.</h2>
           </Col>
+        </Row>
+        <Row>
+          {this.state.campaigns.length > 0 ? this.state.campaigns.splice(0,3).map(campaign => (
+            <SplashScreenCampaign
+              key={campaign.index}
+              title={campaign.campaignName}
+              summary={campaign.summary}
+              url={campaign._id}
+            />
+          )) : <SplashScreenCampaign
+              title="Filler Title"
+              summary="Filler Summary"
+            />
+          }
         </Row>
       </Grid>
     )

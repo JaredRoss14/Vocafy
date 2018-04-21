@@ -41,6 +41,7 @@ class CampaignForm extends Component {
       formSubmitted: false,
       changeActivatorsId: [],
       redirect: false,
+      redirectLink: ""
     }
 
     this.handleShow = this.handleShow.bind(this);
@@ -186,7 +187,10 @@ class CampaignForm extends Component {
         },
     }).then(res => {
       console.log(res.data);
-      this.setState({ redirect: true });
+      this.setState({
+        redirect: true,
+        redirectLink: "/movement/" + res.data._id
+      });
     })
       .catch(err => console.log(err));
   }
@@ -195,7 +199,7 @@ class CampaignForm extends Component {
   render() {
     return (
       <Form className="campaignForm">
-        {this.state.redirect ? <Redirect to='/' /> : ''}  
+        {this.state.redirect ? <Redirect to={this.state.redirectLink} /> : ''}  
         <h2>Build Your Movement</h2>
 
         {/* 
@@ -541,6 +545,8 @@ class CampaignForm extends Component {
         {/* 
         Campaign Social Links 
         */}
+
+        {/* {FIND} */}
 
         <FormGroup>
           <ControlLabel>External Links</ControlLabel>
