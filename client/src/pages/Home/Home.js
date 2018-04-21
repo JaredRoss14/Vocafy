@@ -45,13 +45,17 @@ class Home extends Component {
         </Row>
         <Row>
           <Col md={8}>
-            {this.state.campaigns.map(campaign => (
+            {this.state.campaigns.length > 0 ? this.state.campaigns.map(campaign => (
               <CampaignOverview
                 key={campaign.index}
                 title={campaign.campaignName}
                 summary={campaign.summary}
               />
-            ))}
+            )) : <CampaignOverview
+                title="Filler Title"
+                summary="Filler Summary"
+              />  
+            }
           </Col>  
           <Col md={4}>
             <UserMovements />  

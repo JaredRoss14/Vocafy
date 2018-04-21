@@ -31,6 +31,7 @@ module.exports = (app, passport) => {
 
   // Test if user is logged in
   app.get('/user/loggedIn', isLoggedIn, (req, res) => {
+    console.log("reqest from get" + req);
     res.send({ username: req.user.local.username });
   })
 
@@ -49,7 +50,8 @@ module.exports = (app, passport) => {
   // Route middleware to makesure user is logged in 
   function isLoggedIn(req, res, next) {
     // If Authenticated, Continue
-    if (req.isAuthenticated()) {
+    console.log("isloggedinreq" + req.body)
+    if (req.user) {
       console.log("Logged In!!");
       return next();
     } else {

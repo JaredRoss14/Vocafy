@@ -4,7 +4,6 @@ import { Redirect } from 'react-router-dom'
 import './CampaignForm.css';
 import API from "../../utils/API";
 import ChangeActivatorForm from "../ChangeActivatorForm";
-import newId from '../../utils/newid';
 
 class CampaignForm extends Component {
   constructor(props) {
@@ -83,10 +82,6 @@ class CampaignForm extends Component {
       showModal: false,
       modalPageNumber: 0,
     });
-  }
-
-  componentWillMount() {
-    this.id = newId();
   }
 
   handleOrganization() {

@@ -12,14 +12,17 @@ module.exports = function (passport) {
 
   // Serialize User
   passport.serializeUser(function (user, done) {
-    console.log('=========');
-    console.log(user);
-    done(null, user);
+    console.log('=========Serializing========');
+    console.log(user.id);
+    done(null, user.id);
   });
 
   // Deserialize User
   passport.deserializeUser(function (id, done) {
+    console.log('=========DeSerializing========');
+    console.log('id:' + id);
     User.findById(id, function (err, user) {
+      console.log(user);
       done(err, user)
     });
   });
@@ -34,15 +37,16 @@ module.exports = function (passport) {
     
 
       // See if the user trying to login already exists
-      User.findOne({ 'local.username': username }, function (err, user) {
+    User.findOne({ 'local.username': username }, function (err, user) {
+        
           
         // If there are any errors, return error
         if (err) {
-          console.log("Database Error: Looking for user");
+          console.log("Database Error: Looking for user" + err);
           return done(err);
         }
           
-        // Check to see if a user with that email already exists
+        // Check to see if a user with that name already exists
         if (user) {
           console.log("Account Error: Username taken");
           return done(null, false, req.flash('signupMessage', 'That username is already in use.'));
@@ -83,6 +87,8 @@ module.exports = function (passport) {
       // See if user exists
       User.findOne({ 'local.username': username }, function (err, user) {
 
+        console.log("userhere!:" + user);
+
         // If errors, return errors
         if (err) {
           console.log("Error in passport")
@@ -100,8 +106,8 @@ module.exports = function (passport) {
           console.log("wrong password from passport");
           return done('Invalid username/password', false, null);
         }
-
-        return done(null, user.local.username);
+        console.log("It works!" + user.local.username);
+        return done(null, user);
       }).catch(error => {
         return done(error);
       })
