@@ -13,24 +13,24 @@ class Home extends Component {
     }
   }
 
-  // componentDidMount() {
-  //   this.loadTimeline()
-  // }
+  componentDidMount() {
+    this.loadTimeline()
+  }
 
-  // loadTimeline = () => {
-  //   // Load campaign
-  //   API.findAllCampaigns()
-  //     .then(res => {
-  //       this.setState({
-  //         campaigns: res.data
-  //       }, () => {
-  //         console.log(this.state);
-  //       })
-  //     })
-  //     .catch(err => {
-  //       console.log("error in page mount: " + err.response);
-  //     })
-  // }
+  loadTimeline = () => {
+    // Load campaign
+    API.findAllCampaigns()
+      .then(res => {
+        this.setState({
+          campaigns: res.data
+        }, () => {
+          console.log(this.state);
+        })
+      })
+      .catch(err => {
+        console.log("error in page mount: " + err.response);
+      })
+  }
 
   render() {
     return (
@@ -44,7 +44,7 @@ class Home extends Component {
           </Col>  
         </Row>
         <Row>
-          {/* <Col md={8}>
+          <Col md={8}>
             {this.state.campaigns.map(campaign => (
               <CampaignOverview
                 key={campaign.index}
@@ -52,7 +52,7 @@ class Home extends Component {
                 summary={campaign.summary}
               />
             ))}
-          </Col>   */}
+          </Col>  
           <Col md={4}>
             <UserMovements />  
           </Col>
