@@ -41,7 +41,7 @@ export default class SplashScreen extends Component {
           <Col md={8} mdOffset={2} className="heroHeader">
             <h1>Giving A Voice To The People</h1>
             <h3>{this.state.campaigns.length} Campaigns And Counting</h3>
-            <Link to="/startmovement"><Button className="heroButton">Create Campaign</Button></Link>
+            <Link to="/signup"><Button className="heroButton">Create Campaign</Button></Link>
           </Col>
         </Row>
         <Row className="show-grid text-center row-two">

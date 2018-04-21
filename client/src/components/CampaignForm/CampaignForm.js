@@ -591,7 +591,7 @@ class CampaignForm extends Component {
             <FormControl
               type="text"
               name="supportsTweet"
-              placeholder="Thank you for supporting our cause"
+              placeholder="Thank you for supporting my movement. It means a lot to me because..."
               value={this.state.supportsTweet}
               onChange={this.handleFormInput}
             />
@@ -603,7 +603,7 @@ class CampaignForm extends Component {
             <FormControl
               type="text"
               name="opposesTweet"
-              placeholder="Here is why I think you should change your mind"
+              placeholder="Here is why I think you should change your mind..."
               value={this.state.opposesTweet}
               onChange={this.handleFormInput}
             />
@@ -611,12 +611,12 @@ class CampaignForm extends Component {
 
           <InputGroup className="inputGroupMarginBottom">
             <InputGroup.Addon>
-              Undecided  
+              <spam className="tweetFormUndecided">Undecided</spam>
             </InputGroup.Addon>
             <FormControl
               type="text"
               name="undecidedTweet"
-              placeholder="Here is why I think you should support my cause"
+              placeholder="This movement is too important to sit on the sidelines. Here's why..."
               value={this.state.undecidedTweet}
               onChange={this.handleFormInput}
             />
@@ -629,14 +629,14 @@ class CampaignForm extends Component {
             <FormControl
               type="text"
               name="unknownTweet"
-              placeholder="I see that you are unaware of my campaign, here is why I think it is important."
+              placeholder="You haven't made your views public, I think it's incredibly important that you do so because..."
               value={this.state.unknownTweet}
               onChange={this.handleFormInput}
             />
           </InputGroup>
         </FormGroup>
 
-        <Button type="submit" bsStyle="warning" className="text-center"onClick={this.onFormSubmit}>
+        <Button type="submit" bsStyle="warning" className="text-center" onClick={this.onFormSubmit}>
           Create Movement
         </Button>
       </Form>
