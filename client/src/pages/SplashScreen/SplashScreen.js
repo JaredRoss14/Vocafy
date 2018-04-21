@@ -15,6 +15,7 @@ export default class SplashScreen extends Component {
     }
   }
 
+<<<<<<< HEAD
   // componentDidMount() {
   //   this.loadCampaigns()
   // }
@@ -35,6 +36,8 @@ export default class SplashScreen extends Component {
   //     })
   // }
 
+=======
+>>>>>>> f81bc5a540c3d8c34665994837fbf4662ae4ca83
   render() {
     return (
       <Grid fluid>
@@ -59,20 +62,6 @@ export default class SplashScreen extends Component {
             <h2>Mobilize.</h2>
           </Col>
         </Row>
-        <Row className="show-grid text-center">
-          <Col md={12}>
-          <h2>Popular Campaigns</h2>  
-          </Col>  
-        </Row>  
-        <Row className="show-grid text-center">
-          {this.state.campaigns.slice(0, 3).map(campaign => (
-              <SplashScreenCampaign
-                name={campaign.campaignName}
-                summary={campaign.summary}
-              />
-            ))
-          }  
-        </Row> 
       </Grid>
     )
   }
